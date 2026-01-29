@@ -64,15 +64,15 @@ function App() {
       if (result.success && result.symlinks) {
         setSymlinks(result.symlinks);
         if (result.symlinks.length === 0) {
-          addToast('warning', 'Bilgi', 'Bu dizinde sembolik link bulunamadı.');
+          addToast('warning', 'Info', 'No symbolic links found in this directory.');
         } else {
-          addToast('success', 'Tarama Tamamlandı', `${result.symlinks.length} sembolik link bulundu.`);
+          addToast('success', 'Scan Complete', `Found ${result.symlinks.length} symbolic link(s).`);
         }
       } else {
-        addToast('error', 'Hata', result.error || 'Dizin taranamadı');
+        addToast('error', 'Error', result.error || 'Failed to scan directory');
       }
     } catch {
-      addToast('error', 'Hata', 'Beklenmeyen bir hata oluştu');
+      addToast('error', 'Error', 'An unexpected error occurred');
     } finally {
       setIsLoading(false);
     }
@@ -89,7 +89,7 @@ function App() {
 
   // Delete symlink
   const handleDelete = async (linkPath: string, name: string) => {
-    if (!confirm(`"${name}" sembolik linkini silmek istediğinizden emin misiniz?`)) {
+    if (!confirm(`Are you sure you want to delete "${name}" symbolic link?`)) {
       return;
     }
 
@@ -97,12 +97,12 @@ function App() {
       const result = await window.symlink.remove(linkPath);
       if (result.success) {
         setSymlinks(prev => prev.filter(s => s.linkPath !== linkPath));
-        addToast('success', 'Silindi', `"${name}" başarıyla silindi.`);
+        addToast('success', 'Deleted', `"${name}" was successfully deleted.`);
       } else {
-        addToast('error', 'Hata', result.error || 'Silinirken hata oluştu');
+        addToast('error', 'Error', result.error || 'Failed to delete');
       }
     } catch {
-      addToast('error', 'Hata', 'Beklenmeyen bir hata oluştu');
+      addToast('error', 'Error', 'An unexpected error occurred');
     }
   };
 
@@ -133,7 +133,7 @@ function App() {
             className="btn btn-primary"
             onClick={() => setShowCreateModal(true)}
           >
-            {Icons.add} Yeni Symlink
+            {Icons.add} New Symlink
           </button>
         </div>
       </header>
@@ -143,14 +143,14 @@ function App() {
         <aside className="app-sidebar">
           <div className="card" style={{ marginBottom: 'var(--space-4)' }}>
             <div className="card-header">
-              <h3 className="card-title">Dizin Seç</h3>
+              <h3 className="card-title">Select Directory</h3>
             </div>
             <button
               className="btn btn-secondary"
               style={{ width: '100%', marginBottom: 'var(--space-3)' }}
               onClick={handleSelectDirectory}
             >
-              {Icons.folder} Dizin Seç
+              {Icons.folder} Browse
             </button>
             {currentPath && (
               <div className="directory-selector">
@@ -165,19 +165,19 @@ function App() {
           {currentPath && (
             <div className="card">
               <div className="card-header">
-                <h3 className="card-title">İstatistikler</h3>
+                <h3 className="card-title">Statistics</h3>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span className="text-secondary text-sm">Toplam</span>
+                  <span className="text-secondary text-sm">Total</span>
                   <span className="font-semibold">{stats.total}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span className="text-secondary text-sm">Geçerli</span>
+                  <span className="text-secondary text-sm">Valid</span>
                   <span className="font-semibold" style={{ color: 'var(--color-success-400)' }}>{stats.valid}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span className="text-secondary text-sm">Kırık</span>
+                  <span className="text-secondary text-sm">Broken</span>
                   <span className="font-semibold" style={{ color: 'var(--color-error-400)' }}>{stats.invalid}</span>
                 </div>
               </div>
@@ -189,25 +189,25 @@ function App() {
           {!currentPath ? (
             <div className="empty-state">
               <div className="empty-state-icon">{Icons.folder}</div>
-              <h2 className="empty-state-title">Başlamak için bir dizin seçin</h2>
+              <h2 className="empty-state-title">Select a directory to get started</h2>
               <p className="empty-state-description">
-                Soldaki "Dizin Seç" butonunu kullanarak taramak istediğiniz klasörü seçin.
+                Use the "Browse" button on the left to select the folder you want to scan.
               </p>
               <button className="btn btn-primary btn-lg" onClick={handleSelectDirectory}>
-                {Icons.folder} Dizin Seç
+                {Icons.folder} Browse
               </button>
             </div>
           ) : (
             <>
               {/* Action Bar */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)' }}>
-                <h2 className="text-xl font-semibold">Sembolik Linkler</h2>
+                <h2 className="text-xl font-semibold">Symbolic Links</h2>
                 <button
                   className="btn btn-ghost"
                   onClick={handleRefresh}
                   disabled={isLoading}
                 >
-                  {isLoading ? <div className="spinner" /> : Icons.refresh} Yenile
+                  {isLoading ? <div className="spinner" /> : Icons.refresh} Refresh
                 </button>
               </div>
 
@@ -215,17 +215,17 @@ function App() {
               {isLoading ? (
                 <div className="empty-state">
                   <div className="spinner spinner-lg" />
-                  <p className="text-secondary" style={{ marginTop: 'var(--space-4)' }}>Taranıyor...</p>
+                  <p className="text-secondary" style={{ marginTop: 'var(--space-4)' }}>Scanning...</p>
                 </div>
               ) : symlinks.length === 0 ? (
                 <div className="empty-state">
                   <div className="empty-state-icon">{Icons.link}</div>
-                  <h2 className="empty-state-title">Sembolik link bulunamadı</h2>
+                  <h2 className="empty-state-title">No symbolic links found</h2>
                   <p className="empty-state-description">
-                    Bu dizinde henüz sembolik link yok. Yeni bir tane oluşturabilirsiniz.
+                    This directory doesn't have any symbolic links yet. Create a new one!
                   </p>
                   <button className="btn btn-primary" onClick={() => setShowCreateModal(true)}>
-                    {Icons.add} Yeni Symlink Oluştur
+                    {Icons.add} Create New Symlink
                   </button>
                 </div>
               ) : (
@@ -242,13 +242,13 @@ function App() {
                       </div>
                       <div className={`symlink-status ${symlink.isValid ? 'valid' : 'invalid'}`}>
                         {symlink.isValid ? Icons.check : Icons.warning}
-                        {symlink.isValid ? 'Geçerli' : 'Kırık'}
+                        {symlink.isValid ? 'Valid' : 'Broken'}
                       </div>
                       <div className="symlink-actions">
                         <button
                           className="btn btn-icon btn-ghost btn-danger"
                           onClick={() => handleDelete(symlink.linkPath, symlink.name)}
-                          title="Sil"
+                          title="Delete"
                         >
                           {Icons.delete}
                         </button>
@@ -269,10 +269,10 @@ function App() {
           onSuccess={() => {
             setShowCreateModal(false);
             if (currentPath) scanDirectory(currentPath);
-            addToast('success', 'Başarılı', 'Sembolik link oluşturuldu.');
+            addToast('success', 'Success', 'Symbolic link created successfully.');
           }}
           onError={(error) => {
-            addToast('error', 'Hata', error);
+            addToast('error', 'Error', error);
           }}
         />
       )}
@@ -330,7 +330,7 @@ function CreateSymlinkModal({ onClose, onSuccess, onError }: CreateSymlinkModalP
 
   const handleCreate = async () => {
     if (!targetPath || !linkPath) {
-      onError('Lütfen hedef ve link konumunu seçin.');
+      onError('Please select both target and link location.');
       return;
     }
 
@@ -340,10 +340,10 @@ function CreateSymlinkModal({ onClose, onSuccess, onError }: CreateSymlinkModalP
       if (result.success) {
         onSuccess();
       } else {
-        onError(result.error || 'Symlink oluşturulamadı');
+        onError(result.error || 'Failed to create symlink');
       }
     } catch {
-      onError('Beklenmeyen bir hata oluştu');
+      onError('An unexpected error occurred');
     } finally {
       setIsCreating(false);
     }
@@ -353,72 +353,72 @@ function CreateSymlinkModal({ onClose, onSuccess, onError }: CreateSymlinkModalP
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
-          <h2 className="modal-title">Yeni Sembolik Link</h2>
+          <h2 className="modal-title">New Symbolic Link</h2>
           <button className="modal-close" onClick={onClose}>✕</button>
         </div>
         <div className="modal-body">
           {/* Link Type */}
           <div className="input-group" style={{ marginBottom: 'var(--space-5)' }}>
-            <label className="input-label">Link Türü</label>
+            <label className="input-label">Link Type</label>
             <div style={{ display: 'flex', gap: 'var(--space-3)' }}>
               <button
                 className={`btn ${linkType === 'file' ? 'btn-primary' : 'btn-secondary'}`}
                 onClick={() => setLinkType('file')}
               >
-                📄 Dosya
+                📄 File
               </button>
               <button
                 className={`btn ${linkType === 'dir' ? 'btn-primary' : 'btn-secondary'}`}
                 onClick={() => setLinkType('dir')}
               >
-                📁 Klasör
+                📁 Folder
               </button>
             </div>
           </div>
 
           {/* Target Path */}
           <div className="input-group" style={{ marginBottom: 'var(--space-5)' }}>
-            <label className="input-label">Hedef {linkType === 'dir' ? 'Klasör' : 'Dosya'}</label>
+            <label className="input-label">Target {linkType === 'dir' ? 'Folder' : 'File'}</label>
             <div className="input-with-button">
               <input
                 type="text"
                 className="input"
                 value={targetPath}
                 onChange={e => setTargetPath(e.target.value)}
-                placeholder="Hedef yolunu seçin veya yazın..."
+                placeholder="Select or enter target path..."
               />
               <button className="btn btn-secondary" onClick={handleSelectTarget}>
-                Seç
+                Browse
               </button>
             </div>
             <span className="text-xs text-tertiary">
-              Symlink'in işaret edeceği gerçek dosya veya klasör
+              The actual file or folder the symlink will point to
             </span>
           </div>
 
           {/* Link Path */}
           <div className="input-group">
-            <label className="input-label">Link Konumu</label>
+            <label className="input-label">Link Location</label>
             <div className="input-with-button">
               <input
                 type="text"
                 className="input"
                 value={linkPath}
                 onChange={e => setLinkPath(e.target.value)}
-                placeholder="Symlink'in oluşturulacağı konum..."
+                placeholder="Where to create the symlink..."
               />
               <button className="btn btn-secondary" onClick={handleSelectLinkLocation}>
-                Seç
+                Browse
               </button>
             </div>
             <span className="text-xs text-tertiary">
-              Symlink dosyasının oluşturulacağı konum ve isim
+              Location and name for the new symbolic link
             </span>
           </div>
         </div>
         <div className="modal-footer">
           <button className="btn btn-secondary" onClick={onClose}>
-            İptal
+            Cancel
           </button>
           <button
             className="btn btn-primary"
@@ -426,7 +426,7 @@ function CreateSymlinkModal({ onClose, onSuccess, onError }: CreateSymlinkModalP
             disabled={isCreating || !targetPath || !linkPath}
           >
             {isCreating ? <div className="spinner" /> : null}
-            {isCreating ? 'Oluşturuluyor...' : 'Symlink Oluştur'}
+            {isCreating ? 'Creating...' : 'Create Symlink'}
           </button>
         </div>
       </div>

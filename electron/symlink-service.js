@@ -21,7 +21,7 @@ async function createSymlink(linkPath, targetPath, type) {
         if (errorMessage.includes('EPERM') || errorMessage.includes('privilege')) {
             return {
                 success: false,
-                error: 'Yönetici yetkileri gerekiyor. Uygulamayı yönetici olarak çalıştırın.'
+                error: 'Administrator privileges required. Please run the application as administrator.'
             };
         }
 
@@ -37,7 +37,7 @@ async function removeSymlink(linkPath) {
         const stats = await fs.lstat(linkPath);
 
         if (!stats.isSymbolicLink()) {
-            return { success: false, error: 'Bu bir sembolik link değil' };
+            return { success: false, error: 'This is not a symbolic link' };
         }
 
         await fs.unlink(linkPath);
@@ -108,7 +108,7 @@ async function validateSymlink(linkPath) {
         const stats = await fs.lstat(linkPath);
 
         if (!stats.isSymbolicLink()) {
-            return { valid: false, error: 'Bu bir sembolik link değil' };
+            return { valid: false, error: 'This is not a symbolic link' };
         }
 
         // Try to access the target
@@ -116,7 +116,7 @@ async function validateSymlink(linkPath) {
         return { valid: true };
     } catch (error) {
         if (error.code === 'ENOENT') {
-            return { valid: false, error: 'Hedef dosya/klasör bulunamadı' };
+            return { valid: false, error: 'Target file/folder not found' };
         }
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return { valid: false, error: errorMessage };
@@ -131,7 +131,7 @@ async function getSymlinkInfo(linkPath) {
         const stats = await fs.lstat(linkPath);
 
         if (!stats.isSymbolicLink()) {
-            return { success: false, error: 'Bu bir sembolik link değil' };
+            return { success: false, error: 'This is not a symbolic link' };
         }
 
         const targetPath = await fs.readlink(linkPath);

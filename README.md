@@ -7,24 +7,24 @@
 ![React](https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 
-**Windows için modern, kullanıcı dostu sembolik link yönetim uygulaması**
+**A modern, user-friendly symbolic link management application for Windows**
 
 </div>
 
 ---
 
-## ✨ Özellikler
+## ✨ Features
 
-- 🔍 **Dizin Tarama** - Herhangi bir klasördeki sembolik linkleri otomatik tespit
-- ➕ **Symlink Oluşturma** - Dosya veya klasör için yeni sembolik link oluştur
-- 🗑️ **Symlink Silme** - Mevcut symlink'leri güvenle kaldır
-- ⚠️ **Kırık Link Tespiti** - Hedefi olmayan symlink'leri otomatik işaretle
-- 📊 **İstatistikler** - Toplam, geçerli ve kırık link sayılarını görüntüle
-- 🌙 **Modern Dark UI** - Göz yormayan şık karanlık tema
+- 🔍 **Directory Scanning** - Automatically detect symbolic links in any folder
+- ➕ **Create Symlinks** - Create new symbolic links for files or folders
+- 🗑️ **Delete Symlinks** - Safely remove existing symbolic links
+- ⚠️ **Broken Link Detection** - Automatically identify symlinks with missing targets
+- 📊 **Statistics** - View total, valid, and broken link counts
+- 🌙 **Modern Dark UI** - Beautiful dark theme that's easy on the eyes
 
 ---
 
-## 📸 Ekran Görüntüsü
+## 📸 Screenshot
 
 <div align="center">
 <img src="docs/app-screenshot.png" alt="Symlink Manager Screenshot" width="800">
@@ -32,58 +32,58 @@
 
 ---
 
-## 🚀 Kurulum
+## 🚀 Installation
 
-### Gereksinimler
+### Requirements
 - Node.js 18+
-- npm veya yarn
+- npm or yarn
 
-### Adımlar
+### Steps
 
 ```bash
-# Repoyu klonla
+# Clone the repository
 git clone https://github.com/serdevir91/symlink-manager.git
 
-# Dizine gir
+# Navigate to directory
 cd symlink-manager
 
-# Bağımlılıkları yükle
+# Install dependencies
 npm install
 
-# Uygulamayı başlat
+# Start the application
 npm run electron:dev
 ```
 
 ---
 
-## 📦 Kullanım
+## 📦 Usage
 
-### Hızlı Başlangıç
+### Quick Start
 
-1. **Dizin Seç** butonuna tıklayın
-2. Taramak istediğiniz klasörü seçin
-3. Mevcut sembolik linkler otomatik listelenecek
+1. Click the **Browse** button
+2. Select the folder you want to scan
+3. Existing symbolic links will be listed automatically
 
-### Yeni Symlink Oluşturma
+### Creating a New Symlink
 
-1. **+ Yeni Symlink** butonuna tıklayın
-2. Link türünü seçin (Dosya/Klasör)
-3. Hedef dosya/klasörü seçin
-4. Symlink'in oluşturulacağı konumu belirleyin
-5. **Symlink Oluştur** butonuna tıklayın
+1. Click **+ New Symlink** button
+2. Select the link type (File/Folder)
+3. Choose the target file/folder
+4. Specify where to create the symlink
+5. Click **Create Symlink**
 
 ---
 
-## 🛠️ Geliştirme
+## 🛠️ Development
 
 ```bash
-# Development modunda çalıştır
+# Run in development mode
 npm run electron:dev
 
-# Sadece web UI (tarayıcıda)
+# Web UI only (in browser)
 npm run dev
 
-# Lint kontrolü
+# Lint check
 npm run lint
 
 # Production build
@@ -92,17 +92,17 @@ npm run electron:build
 
 ---
 
-## 📁 Proje Yapısı
+## 📁 Project Structure
 
 ```
 symlink-manager/
-├── electron/           # Electron ana süreç dosyaları
-│   ├── main.js         # Ana süreç
-│   ├── preload.js      # IPC köprüsü
-│   └── symlink-service.js  # Symlink işlemleri
-├── src/                # React uygulaması
-│   ├── App.tsx         # Ana komponent
-│   ├── index.css       # Stiller
+├── electron/           # Electron main process files
+│   ├── main.js         # Main process
+│   ├── preload.js      # IPC bridge
+│   └── symlink-service.js  # Symlink operations
+├── src/                # React application
+│   ├── App.tsx         # Main component
+│   ├── index.css       # Styles
 │   └── main.tsx        # Entry point
 ├── package.json
 └── vite.config.ts
@@ -110,32 +110,32 @@ symlink-manager/
 
 ---
 
-## ⚠️ Önemli Notlar
+## ⚠️ Important Notes
 
-- **Yönetici Yetkileri**: Windows'ta dosya symlink'leri için yönetici yetkileri gerekebilir
-- **Junction**: Klasör symlink'leri için `junction` kullanılır (yönetici gerektirmez)
-- **DevTools**: Geliştirici araçlarını açmak için `Ctrl+Shift+I` kullanın
-
----
-
-## 🤝 Katkıda Bulunma
-
-1. Bu repoyu fork edin
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Add amazing feature'`)
-4. Branch'i push edin (`git push origin feature/amazing-feature`)
-5. Pull Request açın
+- **Administrator Privileges**: Creating file symlinks on Windows may require administrator privileges
+- **Junction**: Folder symlinks use `junction` type (doesn't require admin)
+- **DevTools**: Press `Ctrl+Shift+I` to open developer tools
 
 ---
 
-## 📄 Lisans
+## 🤝 Contributing
 
-MIT License - detaylar için [LICENSE](LICENSE) dosyasına bakın.
+1. Fork this repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
 <div align="center">
 
-**⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!**
+**⭐ If you like this project, don't forget to give it a star!**
 
 </div>
