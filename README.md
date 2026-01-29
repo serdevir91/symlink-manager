@@ -42,7 +42,7 @@
 
 ```bash
 # Repoyu klonla
-git clone https://github.com/KULLANICI_ADI/symlink-manager.git
+git clone https://github.com/serdevir91/symlink-manager.git
 
 # Dizine gir
 cd symlink-manager
