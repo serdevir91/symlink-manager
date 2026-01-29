@@ -27,7 +27,7 @@
 ## 📸 Screenshot
 
 <div align="center">
-<img src="docs/app-screenshot.png" alt="Symlink Manager Screenshot" width="800">
+<img src="docs/screenshot-en.png" alt="Symlink Manager Screenshot" width="800">
 </div>
 
 ---
